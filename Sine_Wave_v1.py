@@ -5,7 +5,7 @@ import math
 
 
 # Get x values of the sine wave
-time = np.arange(0, .01, 0.0001);
+time = np.arange(0, 0.01, 0.0001);
 
 print(len(time))
 
@@ -18,7 +18,7 @@ print(resolution)
 # amplitude = 127*np.sin(2*np.pi*freq*time)
 base_amp = 0.5*np.sin(2*np.pi*freq*time)+0.5 # Signed non-zero centered signwave
 
-amplitude = resolution*base_amp
+amplitude = np.uint16 (resolution*base_amp)
 
 # Plot a sine wave using time  (nd amplitude obtained for the sine wave
 plot.plot(time, amplitude)
@@ -38,6 +38,12 @@ plot.show()
 plot.show()
 
 # # Dump Audio File playing SINE Wave data
-# for i in range(len(time)):
-#     with open("sine_wave.raw", "ab") as f:
-#         f.write(bytes([amplitude[i]]))
+for i in range(len(time)):
+    with open("sine_wave_v3.raw", "ab") as f:
+        # f.write(bytes([amplitude[i]]))
+        f.write(amplitude[i].tobytes())
+
+
+# Audio_test = 32 bits signed Little Endian Fs = 8kHz Pre recorded data
+# sine_wave_v1 = 8 bits unsigned 0-255 Fs = 10kHz Fm = 500Hz Td = 0.5
+# sine_wave_v2 = 12 bits unsigned 0-4095 Fs = 10kHz Fm = 500Hz Td = 1
